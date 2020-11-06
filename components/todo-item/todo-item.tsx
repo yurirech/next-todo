@@ -1,20 +1,29 @@
-import {useState, FC} from "react";
+import {useState, FC, useEffect} from "react";
 import Checkbox from "@material-ui/core/Checkbox";
-
-import { TodoItemType } from "../../lib/items-list";
 
 import { IconButton } from "@material-ui/core";
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import styles from './todo-item.module.scss';
+import { updateCheckboxDocument } from "../../services/todo";
 
+export interface TodoItemType {
+  label: string,
+  done?: boolean,
+  id?: string
+}
 
-const TodoItem: FC<TodoItemType> = ({ label }) => {
+const TodoItem: FC<TodoItemType> = ({ label, children, done, id }) => {
 
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(done);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(e.target.checked);
+    updateCheckboxDocument(id, e.target.checked)
+    .then(() => {
+      console.log('success');
+    }).catch(err => console.log(err));
+    
   };
 
   return (
@@ -25,9 +34,7 @@ const TodoItem: FC<TodoItemType> = ({ label }) => {
         inputProps={{ 'aria-label': 'primary checkbox' }}
       />
       <label className={checked ? styles.todoDone : null}>{label}</label>
-      <IconButton aria-label="delete">
-        <DeleteIcon style={{color: 'blue'}} />
-      </IconButton>
+      {children}
     </div>
   );
 }

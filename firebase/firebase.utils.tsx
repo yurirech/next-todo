@@ -1,4 +1,5 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import 'firebase/firestore';
 
 const config = {
   apiKey: "AIzaSyANI_LCqFo2MgWqUqok1R0ZgPqEvUiDoWc",
@@ -16,3 +17,5 @@ if (!firebase.apps.length) {
 }
 
 export const db = firebase.firestore();
+
+export const timestamp = firebase.firestore.FieldValue.serverTimestamp();
