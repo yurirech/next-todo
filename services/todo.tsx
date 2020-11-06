@@ -22,9 +22,14 @@ export const deleteTodo = (collection: string, id: string) => {
   return db.collection(collection).doc(id).delete()
 };
 
-export const updateCheckboxDocument = (id: string, done?: boolean, field?: any) => {
+export const updateCheckboxDocument = (id: string, done?: boolean) => {
   return db.collection('todos').doc(id).update({
     done,
+  });
+}
+export const updateTodo = (id: string, label: string) => {
+  return db.collection('todos').doc(id).update({
+    label,
   });
 }
 
