@@ -5,6 +5,7 @@ import Navbar from "../components/navbar/navbar";
 import Add from "@material-ui/icons/Add";
 import Delete from "@material-ui/icons/Delete";
 import styles from '../styles/home.module.scss';
+import uStyles from '../styles/utils.module.scss';
 import TodoItem from "../components/todo-item/todo-item";
 
 import {IconButton, Button} from "@material-ui/core";
@@ -63,9 +64,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico"/>
       </Head>
       <Navbar/>
-      <main className='container'>
+      <main className={`${uStyles.container} ${styles.container}`}>
         <div className={styles.todoHeader}>
-          <h2>Add Todo</h2>
+          <h2>Add new task</h2>
           <IconButton aria-label="add" onClick={handleToggleAddTodo}>
             <Add /> 
           </IconButton>

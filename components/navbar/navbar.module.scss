@@ -1,8 +1,19 @@
+@import '../../styles/variables';
+
 .menu {
-  min-height: 4rem;
-  background-color: black;
-  display: flex;
-  align-items: center;
+  min-height: 10rem;
+  background: linear-gradient(to right,$color-rich-black, $color-baby-powder);
   margin: 0;
-  color: white;
+  padding: 0;
+  color: $color-baby-powder;
+
+  menu {
+    padding: 0;
+    
+    h1 {
+      letter-spacing: 2px;
+      padding-top: 9%;
+      padding-bottom: 1rem;
+    }
+  }
 }
