@@ -66,10 +66,12 @@ export default function Home() {
       <Navbar/>
       <main className={`${uStyles.container} ${styles.container}`}>
         <div className={styles.todoHeader}>
-          <h2>Add new task</h2>
-          <IconButton aria-label="add" onClick={handleToggleAddTodo}>
-            <Add /> 
-          </IconButton>
+          <div>
+            <IconButton aria-label="add" onClick={handleToggleAddTodo}>
+              <Add /> 
+            </IconButton>
+            <h2>Add new todo</h2>
+          </div>
           {
             toggleAddTodo ?
             <form onSubmit={handleNewTodo}>
@@ -85,6 +87,7 @@ export default function Home() {
         </div>
 
         <div className="todoList">
+          <h2>Todos</h2>
           {
             todos.map(item => 
             <TodoItem 
