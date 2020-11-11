@@ -2,11 +2,12 @@
 
 .menu {
   min-height: 10rem;
-  background: linear-gradient(to right,$color-rich-black, $color-baby-powder);
   margin: 0;
   padding: 0;
   color: $color-baby-powder;
-
+  background: black;
+  opacity: .9;
+  
   menu {
     padding: 0;
     

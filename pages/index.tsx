@@ -86,7 +86,7 @@ export default function Home() {
           }
         </div>
 
-        <div className="todoList">
+        <div className={styles.todoList}>
           <h2>Todos</h2>
           {
             todos.map(item => 
@@ -97,7 +97,7 @@ export default function Home() {
               done={item.done}
               >
               <IconButton aria-label="delete" onClick={() => handleDeleteTodo(item.id)}>
-                <Delete style={{color: 'blue'}} />
+                <Delete className={styles.deleteButton} />
               </IconButton>
             </TodoItem> 
             )}

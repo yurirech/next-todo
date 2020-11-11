@@ -24,8 +24,7 @@
     margin-bottom: 2rem;
     display: flex;
     justify-content: flex-end;
-
-
+    
     input {
       min-height: 2rem;
       margin-right: .35rem;
@@ -37,5 +36,13 @@
       font-weight: bold;
       padding: .275rem;
     }
+  }
+}
+
+.todoList {
+  width: 60%;
+
+  .deleteButton {
+    color: $color-imperial-red;
   }
 }
