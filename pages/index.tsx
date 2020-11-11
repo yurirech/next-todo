@@ -5,6 +5,7 @@ import Navbar from "../components/navbar/navbar";
 import Add from "@material-ui/icons/Add";
 import Delete from "@material-ui/icons/Delete";
 import styles from '../styles/home.module.scss';
+import uStyles from '../styles/utils.module.scss';
 import TodoItem from "../components/todo-item/todo-item";
 
 import {IconButton, Button} from "@material-ui/core";
@@ -63,12 +64,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico"/>
       </Head>
       <Navbar/>
-      <main className='container'>
+      <main className={`${uStyles.container} ${styles.container}`}>
         <div className={styles.todoHeader}>
-          <h2>Add Todo</h2>
-          <IconButton aria-label="add" onClick={handleToggleAddTodo}>
-            <Add /> 
-          </IconButton>
+          <div>
+            <IconButton aria-label="add" onClick={handleToggleAddTodo}>
+              <Add /> 
+            </IconButton>
+            <h2>Add new todo</h2>
+          </div>
           {
             toggleAddTodo ?
             <form onSubmit={handleNewTodo}>
@@ -83,7 +86,8 @@ export default function Home() {
           }
         </div>
 
-        <div className="todoList">
+        <div className={styles.todoList}>
+          <h2>Todos</h2>
           {
             todos.map(item => 
             <TodoItem 
@@ -93,7 +97,7 @@ export default function Home() {
               done={item.done}
               >
               <IconButton aria-label="delete" onClick={() => handleDeleteTodo(item.id)}>
-                <Delete style={{color: 'blue'}} />
+                <Delete className={styles.deleteButton} />
               </IconButton>
             </TodoItem> 
             )}

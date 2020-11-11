@@ -32,40 +32,46 @@ const TodoItem: FC<TodoItemType> = ({ label, children, done, id }) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log( e.target.editTodo.value);
     updateTodo(id, e.target.editTodo.value)
     .then(() => {
       setTodoLabel(editTodo);
+      setToggleEditTodo(() => !editTodo)
     }).catch(err => console.log(err));
   }
 
   return (
-    <div className="item">
-      <Checkbox
-        checked={checked}
-        onChange={handleCheckboxChange}
-        inputProps={{ 'aria-label': 'primary checkbox' }}
-      />
-      <label className={checked ? styles.todoDone : null}>{todoLabel}</label>
-     { 
-        !toggleEditTodo ? 
-        null
-        :
-        <form onSubmit={handleSubmit}>
-          <input type='text' 
-                name='editTodo' 
-                value={editTodo} 
-                onChange={e => setEditTodo(e.target.value)} 
-                />
-                <Button type='submit' >Send</Button>
-        </form>
-        }
-      <IconButton aria-label="delete" onClick={() => setToggleEditTodo(() => !toggleEditTodo)}>
-        <Edit style={{color: 'blue'}} />
-      </IconButton>
-      {children}
-    </div>
-  );
+    <>
+      <div className={styles.item}>
+        <Checkbox
+          checked={checked}
+          onChange={handleCheckboxChange}
+          inputProps={{ 'aria-label': 'primary checkbox' }}
+        />
+        <label className={checked ? styles.todoDone : null}>{todoLabel}</label>
+        
+        <div className={styles.icons}>
+        <IconButton aria-label="delete" onClick={() => setToggleEditTodo(() => !toggleEditTodo)}>
+          <Edit className={styles.editButton} />
+        </IconButton>
+        {children}
+        </div>
+        
+      </div>
+      { 
+          !toggleEditTodo ? 
+          null
+          :
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <input type='text' 
+                  name='editTodo' 
+                  value={editTodo} 
+                  onChange={e => setEditTodo(e.target.value)} 
+                  />
+                  <Button type='submit'>Send</Button>
+          </form>
+          }
+    </> 
+    );
 }
 
 export default TodoItem;
