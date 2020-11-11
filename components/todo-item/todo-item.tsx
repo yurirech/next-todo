@@ -48,12 +48,14 @@ const TodoItem: FC<TodoItemType> = ({ label, children, done, id }) => {
           inputProps={{ 'aria-label': 'primary checkbox' }}
         />
         <label className={checked ? styles.todoDone : null}>{todoLabel}</label>
+        
         <div className={styles.icons}>
         <IconButton aria-label="delete" onClick={() => setToggleEditTodo(() => !toggleEditTodo)}>
           <Edit className={styles.editButton} />
         </IconButton>
         {children}
         </div>
+        
       </div>
       { 
           !toggleEditTodo ? 
