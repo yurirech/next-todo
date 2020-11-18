@@ -4,10 +4,14 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
-import { isChecked } from '../reducers/todo-item';
+import { toggleAddTodo, changeTodo, isEmpty, handleTodos } from '../reducers/todo-main';
 
 const logger = createLogger();
-const rootReducer = combineReducers({ isChecked });
+const rootReducer = combineReducers({ 
+  changeTodo, 
+  toggleAddTodo, 
+  isEmpty, 
+  handleTodos });
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, logger));
 
 function App({ Component, pageProps }: AppProps) {
