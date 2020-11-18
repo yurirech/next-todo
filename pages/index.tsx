@@ -1,4 +1,5 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import Head from 'next/head'
 
 import Navbar from "../components/navbar/navbar";
@@ -10,35 +11,39 @@ import TodoItem from "../components/todo-item/todo-item";
 
 import {IconButton, Button} from "@material-ui/core";
 import { getData, saveData, deleteTodo } from '../services/todo';
+import {toggleAddTodo, changeTodo, isEmpty, getTodos, setTodo} from '../actions/todo-main';
 
 export default function Home() {
-  const [toggleAddTodo, setToggleAddTodo] = useState(false);
-  const [changeTodo, setChangeTodo] = useState(false);
-  const [todos, setTodos] = useState([]);
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [todo, setTodo] = useState('');
+  const dispatch = useDispatch();
+  const {addTodo, changeTodoState, empty, todos, todo} = useSelector((state: any) => ({
+    addTodo: state.toggleAddTodo, 
+    changeTodoState: state.changeTodo, 
+    empty: state.isEmpty, 
+    todos: state.handleTodos.getTodos, 
+    todo: state.handleTodos.setTodo
+  }), shallowEqual);
 
   useEffect(() => {
-    getData().then(items => {
-      setTodos([...items])
+    getData().then((items: []) => {
+      dispatch(getTodos(items))
     })
-  }, [changeTodo])
+  }, [changeTodoState])
 
   const handleToggleAddTodo = () => {
-    setToggleAddTodo(() => !toggleAddTodo);
+    dispatch(toggleAddTodo())
   }
 
   const handleNewTodo = (e: any) => {
     e.preventDefault();
     if (!todo) {
-      setIsEmpty(true);
+      dispatch(isEmpty(true))
       return;
     }
     saveData('todos', todo, false)
     .then(() => {
-      setChangeTodo(() => !changeTodo);
-      setIsEmpty(false);
-      setTodo('');
+      dispatch(changeTodo())
+      dispatch(isEmpty(false));
+      dispatch(setTodo(''));
     }).catch(() => {
       alert('Something went wrong, please try again');
     })
@@ -51,7 +56,7 @@ export default function Home() {
     }
     deleteTodo('todos', id)
     .then(() => {
-      setChangeTodo(() => !changeTodo)
+      dispatch(changeTodo())
     }).catch(err => {
       alert('Something went wrong, please try again');
     })
@@ -73,13 +78,13 @@ export default function Home() {
             <h2>Add new todo</h2>
           </div>
           {
-            toggleAddTodo ?
+            addTodo ?
             <form onSubmit={handleNewTodo}>
-              <input type="text" name='todo' value={todo} onChange={e => setTodo(e.target.value)} />
+              <input type="text" name='todo' value={todo} onChange={e => dispatch(setTodo(e.target.value))} />
               <Button type='submit' aria-label="add">
                 Add 
               </Button>
-              { isEmpty ? <div style={{color: 'red'}}>Add todo</div> : null }
+              { empty ? <div style={{color: 'red'}}>Add todo</div> : null }
             </form>
             :
             null
@@ -89,7 +94,7 @@ export default function Home() {
         <div className={styles.todoList}>
           <h2>Todos</h2>
           {
-            todos.map(item => 
+            todos.map((item: { id: string; label: string; done: boolean; }) => 
             <TodoItem 
               key={item.id} 
               id={item.id} 

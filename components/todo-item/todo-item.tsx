@@ -35,41 +35,41 @@ const TodoItem: FC<TodoItemType> = ({ label, children, done, id }) => {
     updateTodo(id, e.target.editTodo.value)
     .then(() => {
       setTodoLabel(editTodo);
-      setToggleEditTodo(() => !editTodo)
     }).catch(err => console.log(err));
   }
 
   return (
     <>
-      <div className={styles.item}>
-        <Checkbox
-          checked={checked}
-          onChange={handleCheckboxChange}
-          inputProps={{ 'aria-label': 'primary checkbox' }}
-        />
-        <label className={checked ? styles.todoDone : null}>{todoLabel}</label>
-        
-        <div className={styles.icons}>
-        <IconButton aria-label="delete" onClick={() => setToggleEditTodo(() => !toggleEditTodo)}>
-          <Edit className={styles.editButton} />
-        </IconButton>
-        {children}
-        </div>
-        
+    <div className={styles.item}>
+      <Checkbox
+        checked={checked}
+        onChange={handleCheckboxChange}
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
+      <label className={checked ? styles.todoDone : null}>{todoLabel}</label>
+      <div className={styles.icons}>
+      <IconButton aria-label="delete" onClick={() => setToggleEditTodo(() => !toggleEditTodo)}>
+        <Edit className={styles.editButton} />
+      </IconButton>
+      {children}
       </div>
-      { 
-          !toggleEditTodo ? 
-          null
-          :
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <input type='text' 
-                  name='editTodo' 
-                  value={editTodo} 
-                  onChange={e => setEditTodo(e.target.value)} 
-                  />
-                  <Button type='submit'>Send</Button>
-          </form>
-          }
+      <br/>
+    </div>
+
+    { 
+        !toggleEditTodo ? 
+        null
+        :
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <input type='text' 
+                name='editTodo' 
+                value={editTodo} 
+                onChange={e => setEditTodo(e.target.value)} 
+                />
+                <Button type='submit' >Send</Button>
+        </form>
+        }
+ 
     </> 
     );
 }
